@@ -1,0 +1,51 @@
+{
+  "name": "crystallize-shopify-import",
+  "version": "1.0.0",
+  "description": "A script importing shopify catalogue and past orders in Crystallize",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node -r esm ./index.js",
+    "import": "node -r esm ./index.js",
+    "single": "MODE=SINGLE node -r esm ./index.js",
+    "atest": "NODE_ENV=test mocha -r esm \"tests/integration/helpers/map-product.js\"",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "NODE_ENV=test mocha -r esm \"tests/unit/**/*.js\"",
+    "test:integration": "NODE_ENV=test mocha -r esm \"tests/integration/**/*.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CrystallizeAPI/crystallize-shopify-import.git"
+  },
+  "keywords": [
+    "shopify",
+    "crystallize",
+    "import",
+    "script",
+    "ecommerce"
+  ],
+  "author": "Stavros Sotiropoulos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CrystallizeAPI/crystallize-shopify-import/issues"
+  },
+  "homepage": "https://github.com/CrystallizeAPI/crystallize-shopify-import#readme",
+  "dependencies": {
+    "cockatiel": "^1.1.1",
+    "dotenv": "^8.2.0",
+    "download": "^8.0.0",
+    "esm": "^3.2.25",
+    "file-type": "^15.0.0",
+    "form-data": "^3.0.0",
+    "graphql": "^15.3.0",
+    "graphql-request": "^3.0.0",
+    "parse5": "^6.0.1",
+    "slug": "^3.3.4",
+    "xml-js": "^1.6.11"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^8.1.1",
+    "sinon": "^9.0.3"
+  }
+}
