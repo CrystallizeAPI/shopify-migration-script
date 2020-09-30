@@ -16,7 +16,6 @@ export async function handleOrder(order, injections = {}) {
   } = injections;
   const formatedOrder = formatOrder(order);
   const { data } = await createOrder(formatedOrder);
-  console.log(data);
   return Promise.resolve(data);
 }
 

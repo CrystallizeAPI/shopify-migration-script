@@ -4,7 +4,7 @@ require("esm")(module /*, options*/);
 const importer = require("./main.js");
 
 function runImport() {
-  const { MODE, SKU, FILE } = process.env;
+  const { MODE, FILE } = process.env;
   if (MODE === "ORDERS") {
     importer.ordersImport(FILE);
   } else {
