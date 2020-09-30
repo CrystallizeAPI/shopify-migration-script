@@ -12,19 +12,6 @@ import {
 } from "./lib/crystallize";
 
 import { CRYSTALLIZE_ROOT_ITEM_ID } from "./lib/config";
-import product from "./lib/crystallize/mutations/product";
-
-export async function logic() {
-  try {
-    const { collections } = await getCollections();
-    const categories = collections.edges.map((c) => c.node);
-    console.log(categories);
-    return;
-  } catch (error) {
-    console.log(error);
-    return Promise.reject(error);
-  }
-}
 
 function productCollection({ collections, shopifyIdMap }) {}
 export async function recurringProductImport(
