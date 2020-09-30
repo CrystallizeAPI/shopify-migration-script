@@ -4,9 +4,10 @@ require("esm")(module /*, options*/);
 const importer = require("./main.js");
 
 function runImport() {
-  const { MODE, SKU } = process.env;
-  if (MODE === "SINGLE") importer.singleProductImport(SKU);
-  else {
+  const { MODE, SKU, FILE } = process.env;
+  if (MODE === "ORDERS") {
+    importer.ordersImport(FILE);
+  } else {
     importer.catalogueImport(["manual coll"]);
   }
 }

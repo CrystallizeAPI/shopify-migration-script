@@ -2,7 +2,7 @@ import {
   recurringProductImport,
   catalogueImport,
   singleProductImport,
-} from "../../main";
+} from "../../catalogue";
 import sinon from "sinon";
 
 describe("Import functions", () => {

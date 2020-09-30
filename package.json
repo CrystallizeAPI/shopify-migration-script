@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node -r esm ./index.js",
     "import": "node -r esm ./index.js",
+    "import-orders": "MODE=ORDERS node -r esm ./index.js",
     "single": "MODE=SINGLE node -r esm ./index.js",
     "atest": "NODE_ENV=test mocha -r esm \"tests/integration/helpers/map-product.js\"",
     "test": "npm run test:unit && npm run test:integration",
@@ -30,10 +31,12 @@
   },
   "homepage": "https://github.com/CrystallizeAPI/crystallize-shopify-import#readme",
   "dependencies": {
+    "@fast-csv/parse": "^4.3.2",
     "cockatiel": "^1.1.1",
     "dotenv": "^8.2.0",
     "download": "^8.0.0",
     "esm": "^3.2.25",
+    "fast-csv": "^4.3.2",
     "file-type": "^15.0.0",
     "form-data": "^3.0.0",
     "graphql": "^15.3.0",
