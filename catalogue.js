@@ -1,24 +1,24 @@
-import mapToFolders from "./lib/helpers/map-folder";
-import mapToProducts from "./lib/helpers/map-product";
-import createCrystallizeShape from "./lib/crystallize/helpers/create-shape";
-import filterOutTagCategories from "./lib/helpers/category-filter";
-import { getCollections, getProducts } from "./lib/shopify";
+import mapToFolders from './lib/helpers/map-folder'
+import mapToProducts from './lib/helpers/map-product'
+import createCrystallizeShape from './lib/crystallize/helpers/create-shape'
+import filterOutTagCategories from './lib/helpers/category-filter'
+import { getCollections, getProducts } from './lib/shopify'
 import {
   createFolderStructure,
   createTopics,
   createProducts,
   storeProductImages,
   getCrystallizeTopics,
-} from "./lib/crystallize";
+} from './lib/crystallize'
 
-import { CRYSTALLIZE_ROOT_ITEM_ID } from "./lib/config";
+import { CRYSTALLIZE_ROOT_ITEM_ID } from './lib/config'
 
 function productCollection({ collections, shopifyIdMap }) {}
 export async function recurringProductImport(
   {
     first = 250,
     after = null,
-    crystallizeGenericShapeId,
+    crystallizeGenericShapeIdentifier,
     shopifyIdMap,
     shopifyTopicCollections = [],
     topics = [],
@@ -30,15 +30,15 @@ export async function recurringProductImport(
     mapToCrystallizeProducts = mapToProducts,
     createCrystallizeProducts = createProducts,
     storeCrystallizeProductImages = storeProductImages,
-  } = injections;
+  } = injections
   const {
     products: {
       pageInfo: { hasNextPage },
       edges,
     },
-  } = await queryProducts(first, after);
+  } = await queryProducts(first, after)
 
-  const shopifyProducts = edges.map((e) => e.node);
+  const shopifyProducts = edges.map((e) => e.node)
 
   // Find proper collection for the product
 
@@ -47,28 +47,32 @@ export async function recurringProductImport(
     shopifyIdMap,
     shopifyTopicCollections,
     topics,
-    crystallizeGenericShapeId
-  );
+    crystallizeGenericShapeIdentifier
+  )
 
-  console.log("Generating Category Products");
-  await createCrystallizeProducts(crystallizeProducts);
+  console.log('Generating Category Products 1')
+  try {
+    await createCrystallizeProducts(crystallizeProducts)
+  } catch (err) {
+    console.error('fuckup is here', err, crystallizeGenericShapeIdentifier)
+  }
 
-  console.log("\t\t\tUploading Images");
+  console.log('\t\t\tUploading Images')
   for (const p of shopifyProducts) {
-    await storeCrystallizeProductImages(p);
+    await storeCrystallizeProductImages(p)
   }
 
   if (hasNextPage) {
     await recurringProductImport({
       first,
       after: edges[edges.length - 1].cursor,
-      crystallizeGenericShapeId,
+      crystallizeGenericShapeIdentifier,
       shopifyIdMap,
       shopifyTopicCollections,
       topics,
-    });
+    })
   }
-  return Promise.resolve();
+  return Promise.resolve()
 }
 
 export async function catalogueImport(
@@ -84,49 +88,49 @@ export async function catalogueImport(
     getTopics = getCrystallizeTopics,
     importCrystallizeCatalogue = recurringProductImport,
     createCrystallizeGenericShape = createCrystallizeShape,
-  } = injections;
+  } = injections
 
   try {
-    console.log("Getting categories");
-    const { collections } = await getCategories();
-    const categories = collections.edges.map((c) => c.node);
+    console.log('Getting categories')
+    const { collections } = await getCategories()
+    const categories = collections.edges.map((c) => c.node)
 
     const filteredCategories = filterCategories(
       categories,
       shopifyTopicCollections
-    );
-    console.log("Mapping to Crystallize");
-    const crystallizeFolders = mapToCrystallizeFolders(filteredCategories);
+    )
+    console.log('Mapping to Crystallize')
+    const crystallizeFolders = mapToCrystallizeFolders(filteredCategories)
 
-    console.log("Creating Folder Structure");
+    console.log('Creating Folder Structure')
     const shopifyIdMap = await createCrystallizeFolderStructure(
       crystallizeFolders
-    );
+    )
 
-    console.log("Creating Topics");
+    console.log('Creating Topics')
     const topicCategories = categories.filter((c) =>
       shopifyTopicCollections.includes(c.title)
-    );
-    await createCrystallizeTopics(topicCategories);
+    )
+    await createCrystallizeTopics(topicCategories)
 
-    console.log("Create Crystallize generic Shape");
-    const { data } = await createCrystallizeGenericShape();
+    console.log('Create Crystallize generic Shape')
+    const { data } = await createCrystallizeGenericShape()
 
-    const topics = await getTopics();
+    const topics = await getTopics()
 
-    console.log("Importing Catalogue");
+    console.log('Importing Catalogue')
     return importCrystallizeCatalogue(
       {
         shopifyIdMap,
         categories,
-        crystallizeGenericShapeId: data.shape.create.id,
+        crystallizeGenericShapeIdentifier: data.shape.create.identifier,
         topics,
       },
       injections
-    );
+    )
   } catch (error) {
-    console.log(error);
-    return Promise.reject(error);
+    console.log(error)
+    return Promise.reject(error)
   }
 }
 
@@ -140,33 +144,33 @@ export async function singleProductImport(
     mapToCrystallizeProducts = mapToProducts,
     createCrystallizeProducts = createProducts,
     storeCrystallizeProductImages = storeProductImages,
-  } = injections;
+  } = injections
 
   try {
-    console.log("Creating Crystallize generic Shape");
-    const { data } = await createCrystallizeGenericShape({ attempts: 1 });
+    console.log('Creating Crystallize generic Shape')
+    const { data } = await createCrystallizeGenericShape({ attempts: 1 })
     // Fetch Product information from Magento
-    console.log("Fetching Shopify Products");
-    const { products, hasSecondPage } = await queryProducts(1);
-    const shopifyProduct = products.edges[0].node;
+    console.log('Fetching Shopify Products')
+    const { products, hasSecondPage } = await queryProducts(1)
+    const shopifyProduct = products.edges[0].node
 
     const crystallizeProducts = mapToCrystallizeProducts(
       [shopifyProduct],
       CRYSTALLIZE_ROOT_ITEM_ID,
       shopifyTopicCollections,
       [],
-      data.shape.create.id
-    );
+      data.shape.create.identifier
+    )
 
-    console.log("Generating Category Products");
-    await createCrystallizeProducts(crystallizeProducts);
+    console.log('Generating Category Products 2')
+    await createCrystallizeProducts(crystallizeProducts)
 
-    console.log("\t\t\tUploading Images");
+    console.log('\t\t\tUploading Images')
     for (const p of [shopifyProduct]) {
-      await storeCrystallizeProductImages(p);
+      await storeCrystallizeProductImages(p)
     }
   } catch (error) {
-    console.log(error);
-    return Promise.reject(error);
+    console.log(error)
+    return Promise.reject(error)
   }
 }

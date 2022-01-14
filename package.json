@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/CrystallizeAPI/crystallize-shopify-import#readme",
   "dependencies": {
+    "@crystallize/content-transformer": "^9.0.1",
     "@fast-csv/parse": "^4.3.2",
     "cockatiel": "^1.1.1",
     "dotenv": "^8.2.0",
