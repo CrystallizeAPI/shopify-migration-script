@@ -1,5 +1,6 @@
 import { DocumentNode, FieldNode, OperationDefinitionNode } from 'graphql'
 import { GraphQLClient } from 'graphql-request'
+import { ShopifyConnectionEdge } from './types'
 
 export class ShopifyClient {
   client: GraphQLClient
@@ -34,11 +35,15 @@ export class ShopifyClient {
     query: DocumentNode,
     first: number,
     after?: string,
-    edges: any[] = []
-  ): Promise<any[]> {
+    edges: ShopifyConnectionEdge[] = []
+  ): Promise<ShopifyConnectionEdge[]> {
     const node = query.definitions[0] as OperationDefinitionNode
-    const field = node.selectionSet.selections[0] as FieldNode
-    const value = field.name.value
+    const field = node?.selectionSet?.selections[0] as FieldNode
+    const value = field?.name?.value
+
+    if (!value) {
+      throw new Error('invalid query for pagination')
+    }
 
     const response = await this.client.request(query, {
       first,
@@ -51,7 +56,7 @@ export class ShopifyClient {
       return this.queryWithPagination(
         query,
         first,
-        response[value].edges.at(-1).cursor,
+        response[value]?.edges?.at(-1).cursor,
         edges
       )
     }

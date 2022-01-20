@@ -7,15 +7,25 @@ import {
   JSONStructuredTopic,
   JSONTopic,
 } from '@crystallize/import-utilities'
-import { productsQuery } from './shopify/graphql/products-query'
-import { ShopifyClient } from './shopify/client'
-import { ShopifyProduct } from './shopify/types'
+import {
+  productsQuery,
+  ShopifyClient,
+  ShopifyConnectionEdge,
+  ShopifyProduct,
+} from './shopify'
 import { mapProduct, mapFolder } from './crystallize'
 
 export const createItemSpec = async (
   client: ShopifyClient
 ): Promise<JsonSpec> => {
-  const edges = await client.queryWithPagination(productsQuery, 10)
+  let edges: ShopifyConnectionEdge[]
+  try {
+    edges = await client.queryWithPagination(productsQuery, 10)
+  } catch (err) {
+    console.log(productsQuery)
+    console.error('Error querying products', err)
+    return
+  }
   const products = edges.map((edge) => mapProduct(edge.node))
 
   const folderNames: string[] = [

@@ -41,3 +41,8 @@ export interface ShopifyProduct {
   }
   featuredImage?: ShopifyImage
 }
+
+export interface ShopifyConnectionEdge {
+  cursor: string
+  node: any
+}
