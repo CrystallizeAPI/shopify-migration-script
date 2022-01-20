@@ -1,8 +1,4 @@
 import {
-  JSONFolder,
-  JSONItemTopic,
-  JSONProduct,
-  JSONProductVariant,
   JsonSpec,
   JSONStructuredTopic,
   JSONTopic,
@@ -22,7 +18,6 @@ export const createItemSpec = async (
   try {
     edges = await client.queryWithPagination(productsQuery, 10)
   } catch (err) {
-    console.log(productsQuery)
     console.error('Error querying products', err)
     return
   }
@@ -40,22 +35,26 @@ export const createItemSpec = async (
       .filter((topic) =>
         (topic as JSONStructuredTopic).path.startsWith('/collections/')
       )
-      .map(
-        (topic): JSONTopic => ({
-          name: (topic as JSONStructuredTopic).path.split('/').at(-1),
-        })
-      )
+      .map((topic): JSONTopic => {
+        // Array.at would be nicer, but not supported <= node 16.6.0
+        const split = (topic as JSONStructuredTopic).path.split('/')
+        return {
+          name: split[split.length - 1],
+        }
+      })
   )
   const tagTopics: JSONTopic[] = products.flatMap((product) =>
     product.topics
       .filter((topic) =>
         (topic as JSONStructuredTopic).path.startsWith('/tags/')
       )
-      .map(
-        (topic): JSONTopic => ({
-          name: (topic as JSONStructuredTopic).path.split('/').at(-1),
-        })
-      )
+      .map((topic): JSONTopic => {
+        // Array.at would be nicer, but not supported <= node 16.6.0
+        const split = (topic as JSONStructuredTopic).path.split('/')
+        return {
+          name: split[split.length - 1],
+        }
+      })
   )
 
   return {

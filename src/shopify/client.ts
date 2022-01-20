@@ -35,7 +35,7 @@ export class ShopifyClient {
     query: DocumentNode,
     first: number,
     after?: string,
-    edges: ShopifyConnectionEdge[] = []
+    allEdges: ShopifyConnectionEdge[] = []
   ): Promise<ShopifyConnectionEdge[]> {
     const node = query.definitions[0] as OperationDefinitionNode
     const field = node?.selectionSet?.selections[0] as FieldNode
@@ -50,16 +50,18 @@ export class ShopifyClient {
       after,
     })
 
-    edges = response[value].edges.concat(edges)
+    const edges = response[value].edges
+    allEdges = allEdges.concat(edges)
 
     if (response[value]?.pageInfo?.hasNextPage) {
       return this.queryWithPagination(
         query,
         first,
-        response[value]?.edges?.at(-1).cursor,
-        edges
+        // Array.at would be nicer, but not supported <= node 16.6.0
+        edges[edges.length - 1]?.cursor,
+        allEdges
       )
     }
-    return edges
+    return allEdges
   }
 }
