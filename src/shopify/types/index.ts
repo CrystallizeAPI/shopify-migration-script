@@ -25,9 +25,9 @@ export interface ShopifyProduct {
   title: string
   handle: string
   productType: string
-  description: string
-  descriptionHtml: string
   vendor: string
+  description?: string
+  descriptionHtml?: string
   tags?: string[]
   collections?: {
     edges: {
