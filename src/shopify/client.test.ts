@@ -54,9 +54,10 @@ test('queryWithPagination() queries all pages', async (t) => {
   const client = new ShopifyClient()
   const edges = await client.queryWithPagination(query, 10)
 
-  t.assert(edges.length === 4, 'response has 4 edges')
+  t.is(edges.length, 4, 'response has 4 edges')
   t.deepEqual(
     edges.map(({ cursor }) => cursor),
-    ['ABC=', 'DEF=', 'GHI=', 'JKL=']
+    ['ABC=', 'DEF=', 'GHI=', 'JKL='],
+    'response has 4 unique edges'
   )
 })
