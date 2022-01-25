@@ -15,7 +15,7 @@ export const mapProductVariant = (
     name: variant.title || product.title,
     sku: variant.sku || `${product.handle}-${i}`,
     price: parseFloat(variant.price) || 0,
-    stock: 0, // variant.inventoryQuantity needs to be retrieved from admin api,
+    stock: variant.inventoryQuantity || 0,
     isDefault: i === 0,
     attributes,
     images:

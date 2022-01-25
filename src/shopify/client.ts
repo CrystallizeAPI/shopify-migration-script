@@ -2,6 +2,7 @@ import { DocumentNode, FieldNode, OperationDefinitionNode } from 'graphql'
 import { GraphQLClient } from 'graphql-request'
 import { ShopifyConnectionEdge } from './types'
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 export class ShopifyClient {
   client: GraphQLClient
 
@@ -10,14 +11,16 @@ export class ShopifyClient {
       SHOPIFY_API_VERSION,
       SHOPIFY_STOREFRONT_ACCESS_TOKEN,
       SHOPIFY_STORE_NAME,
+      SHOPIFY_ADMIN_USERNAME,
+      SHOPIFY_ADMIN_PASSWORD,
     } = process.env
     this.client = new GraphQLClient(
-      `https://${SHOPIFY_STORE_NAME}.myshopify.com/api/${SHOPIFY_API_VERSION}/graphql.json`,
-      {
-        headers: {
-          'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_ACCESS_TOKEN,
-        },
-      }
+      `https://${SHOPIFY_ADMIN_USERNAME}:${SHOPIFY_ADMIN_PASSWORD}@${SHOPIFY_STORE_NAME}.myshopify.com/admin/api/${SHOPIFY_API_VERSION}/graphql.json`
+      // {
+      //   headers: {
+      //     'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_ACCESS_TOKEN,
+      //   },
+      // }
     )
   }
 
@@ -54,6 +57,10 @@ export class ShopifyClient {
     allEdges = allEdges.concat(edges)
 
     if (response[value]?.pageInfo?.hasNextPage) {
+      // To avoid rate limiting from the Shopify Admin API.
+      // https://shopify.dev/api/usage/rate-limits
+      await delay(5000)
+
       return this.queryWithPagination(
         query,
         first,
