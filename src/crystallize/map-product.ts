@@ -50,7 +50,7 @@ export const mapProduct = (product: ShopifyProduct): JSONProduct => {
         html: product.descriptionHtml,
       },
       featuredImage:
-        process.env.IMPORT_IMAGES && product.featuredImage
+        process.env.IMPORT_IMAGES === 'true' && product.featuredImage
           ? [
               {
                 src: product.featuredImage.url,

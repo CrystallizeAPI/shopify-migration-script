@@ -19,7 +19,7 @@ export const mapProductVariant = (
     isDefault: i === 0,
     attributes,
     images:
-      process.env.IMPORT_IMAGES && variant.image
+      process.env.IMPORT_IMAGES === 'true' && variant.image
         ? [
             {
               src: variant.image.url,
