@@ -15,7 +15,8 @@
     "importHelpers": true,
     "skipDefaultLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "preserveSymlinks": true
   },
   "includes": ["src/**/*.{ts,tsx,js,jsx,graphql}"],
   "exclude": ["node_modules", "tmp"]
