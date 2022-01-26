@@ -34,6 +34,7 @@ export const productsQuery = gql`
                 title
                 sku
                 price
+                inventoryQuantity
                 selectedOptions {
                   name
                   value
