@@ -3,6 +3,9 @@ import gql from 'graphql-tag'
 export const ordersQuery = gql`
   query GetOrders($first: Int!, $after: String) {
     orders(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
       edges {
         cursor
         node {

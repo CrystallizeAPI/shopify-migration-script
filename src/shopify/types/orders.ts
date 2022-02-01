@@ -26,8 +26,8 @@ export interface ShopifyCustomer {
   id: string
   firstName: string
   lastName: string
-  email: string
-  phone: string
+  email?: string
+  phone?: string
   defaultAddress: {
     firstName: string
     lastName: string
