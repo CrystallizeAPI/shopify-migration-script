@@ -42,8 +42,8 @@ export const mapProduct = (product: ShopifyProduct): JSONProduct => {
     topics: [...collectionTopics, ...tagTopics],
     parentCataloguePath: `/${product.productType
       .toLowerCase()
-      .replace(' ', '-')
-      .replace('_', '')}`,
+      .replace(/ /g, '-')
+      .replace(/_/g, '')}`,
     components: {
       vendor: product.vendor,
       description: {
