@@ -34,7 +34,7 @@
   "homepage": "https://github.com/CrystallizeAPI/crystallize-shopify-import#readme",
   "dependencies": {
     "@crystallize/content-transformer": "^9.0.1",
-    "@crystallize/import-utilities": "^0.79.2",
+    "@crystallize/import-utilities": "^0.84.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.3.0",
     "graphql-request": "^3.0.0",
