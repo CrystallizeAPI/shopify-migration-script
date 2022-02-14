@@ -6,7 +6,7 @@
   "scripts": {
     "migrate": "ts-node ./src/main.ts",
     "migrate:customers": "ts-node ./src/migrate-customers.ts",
-    "migrate:items": "ts-node ./src/main.ts",
+    "migrate:items": "ts-node ./src/migrate-items.ts",
     "migrate:orders": "ts-node ./src/migrate-orders.ts",
     "test": "ava"
   },

@@ -60,6 +60,6 @@ test('mapProductVariant() returns a JSONProductVariant based on a ShopifyProduct
     ],
     isDefault: true,
     price: 50,
-    stock: 0,
+    stock: 20,
   })
 })
