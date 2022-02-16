@@ -9,18 +9,16 @@ export class ShopifyClient {
   constructor() {
     const {
       SHOPIFY_API_VERSION,
-      SHOPIFY_STOREFRONT_ACCESS_TOKEN,
       SHOPIFY_STORE_NAME,
-      SHOPIFY_ADMIN_USERNAME,
-      SHOPIFY_ADMIN_PASSWORD,
+      SHOPIFY_ADMIN_API_ACCESS_TOKEN,
     } = process.env
     this.client = new GraphQLClient(
-      `https://${SHOPIFY_ADMIN_USERNAME}:${SHOPIFY_ADMIN_PASSWORD}@${SHOPIFY_STORE_NAME}.myshopify.com/admin/api/${SHOPIFY_API_VERSION}/graphql.json`
-      // {
-      //   headers: {
-      //     'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_ACCESS_TOKEN,
-      //   },
-      // }
+      `https://${SHOPIFY_STORE_NAME}.myshopify.com/admin/api/${SHOPIFY_API_VERSION}/graphql.json`,
+      {
+        headers: {
+          'X-Shopify-Access-Token': SHOPIFY_ADMIN_API_ACCESS_TOKEN,
+        },
+      }
     )
   }
 
