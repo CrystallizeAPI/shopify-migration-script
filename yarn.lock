@@ -304,12 +304,22 @@
     ow "^0.4.0"
     parse5 "^6.0.1"
 
-"@crystallize/import-utilities@^0.84.0":
-  version "0.84.0"
-  resolved "https://registry.yarnpkg.com/@crystallize/import-utilities/-/import-utilities-0.84.0.tgz#a20ef3b1219ec4493ddaa566ab5196a78d0bf0ee"
-  integrity sha512-WMr1LJn3aqTITg2E6TRUv4tP1gnPooacIdb7VieSHTB7n2SHDhHiZRhb4YB5yoOz+j6nL5pBiD43GecRcIW+bw==
+"@crystallize/content-transformer@^9.1.2":
+  version "9.1.2"
+  resolved "https://registry.yarnpkg.com/@crystallize/content-transformer/-/content-transformer-9.1.2.tgz#cad3f39a8e9422ec0b3ee36ed025a1bfd2b83d3a"
+  integrity sha512-Q60BgNO4uebm1ninFqwRbBzv7dfRmPF4i8JG9YKrgHTAF7zkh4Lt/sE5b0O7n7izVeUbt6OVUhjK9ZAaFABCCg==
   dependencies:
-    "@crystallize/content-transformer" "^9.0.1"
+    is-my-json-valid "^2.17.2"
+    isarray "^2.0.4"
+    ow "^0.4.0"
+    parse5 "^6.0.1"
+
+"@crystallize/import-utilities@^0.85.2":
+  version "0.85.2"
+  resolved "https://registry.yarnpkg.com/@crystallize/import-utilities/-/import-utilities-0.85.2.tgz#2ba1bc41fa4484cf3e04ebf931d5bb26fd72cc7d"
+  integrity sha512-c30Mqh1XfCSItuS4+JbUq7TWyoAB2AhMK6b8A6OUTbYx0nrZ0bsOQpES8CF2FvaCXofQGCuJy77pMmjawWl1ZQ==
+  dependencies:
+    "@crystallize/content-transformer" "^9.1.2"
     dotenv "^10.0.0"
     download "^8.0.0"
     duration "^0.2.2"
@@ -1216,6 +1226,13 @@ clean-yaml-object@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/clean-yaml-object/-/clean-yaml-object-0.1.0.tgz#63fb110dc2ce1a84dc21f6d9334876d010ae8b68"
   integrity sha1-Y/sRDcLOGoTcIfbZM0h20BCui2g=
+
+cli-progress@^3.10.0:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/cli-progress/-/cli-progress-3.10.0.tgz#63fd9d6343c598c93542fdfa3563a8b59887d78a"
+  integrity sha512-kLORQrhYCAtUPLZxqsAt2YJGOvRdt34+O6jl5cQGb7iF3dM55FQZlTR+rQyIK9JUcO9bBMwZsTlND+3dmFU2Cw==
+  dependencies:
+    string-width "^4.2.0"
 
 cli-truncate@^3.1.0:
   version "3.1.0"
