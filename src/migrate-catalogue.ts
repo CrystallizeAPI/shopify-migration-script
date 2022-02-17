@@ -2,7 +2,7 @@ import { bootstrap } from './bootstrap'
 import { createItemSpec } from './json-spec'
 import { ShopifyClient } from './shopify'
 
-export const migrateItems = async () => {
+export const migrateCatalogue = async () => {
   console.log('Fetching existing items from Shopify')
   const client = new ShopifyClient()
   const spec = await createItemSpec(client)
@@ -13,4 +13,4 @@ export const migrateItems = async () => {
   process.exit(0)
 }
 
-migrateItems()
+migrateCatalogue()
