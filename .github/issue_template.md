@@ -4,6 +4,6 @@ However, this repository is what we call a "subtree split": a read-only copy of 
 
 If you want to report or contribute, you should instead open your issue on the main repository:
 
-https://github.com/CrystallizeAPI/boilerplates
+https://github.com/CrystallizeAPI/tools
 
 Thank you for your contribution!
