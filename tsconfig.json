@@ -1,0 +1,23 @@
+{
+  "extends": "@tsconfig/node16/tsconfig.json",
+  "compileOnSave": false,
+  "compilerOptions": {
+    "lib": ["es2021"],
+    "target": "es2020",
+    "strict": false,
+    "removeComments": true,
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "skipDefaultLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "preserveSymlinks": true
+  },
+  "includes": ["src/**/*.{ts,tsx,js,jsx,graphql}"],
+  "exclude": ["node_modules", "tmp"]
+}
